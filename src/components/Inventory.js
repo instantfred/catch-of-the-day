@@ -8,7 +8,7 @@ class Inventory extends React.Component {
         <h2>Inventory</h2>
         {/* we pass the function using props, so thats why we need to invoke them here */}
         <AddFishForm addFish={this.props.addFish} />
-        <button onClick={this.props.loadSampleFishes}>Add Fish Form</button>
+        <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
       </div>
     )
   }
