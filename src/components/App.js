@@ -29,14 +29,30 @@ class App extends React.Component {
     this.setState({ fishes: sampleFishes });
   };
 
+  addToOrder = (key) => {
+    // 1. Create a copy of the current state
+    const order = { ...this.state.order };
+    // 2. Add an order or update the order quantity for a key
+    order[key] = order[key] + 1 || 1;
+    // 3. Call setState to update our current state
+    this.setState({ order: order })
+  };
+
   render(){
     return (
       <div className='catch-of-the-day'>
         <div className='menu'>
           <Header tagline='Fresh Seafood Market' />
           <ul className='fishes'>
-            {/* react needs a unique identifier when looping elements, that why we pass down key inside the p tag */}
-            {Object.keys(this.state.fishes).map(key => <Fish key={key} details={this.state.fishes[key]} />)}
+            {/* react needs a unique identifier when looping elements, that why we pass down key inside the tag */}
+            {Object.keys(this.state.fishes).map(key =>
+              <Fish
+                key={key}
+                index={key}
+                details={this.state.fishes[key]}
+                addToOrder={this.addToOrder}
+              />
+            )}
           </ul>
         </div>
         <Order />
