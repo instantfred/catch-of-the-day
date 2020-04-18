@@ -4,6 +4,7 @@ import Order from './Order';
 import Inventory from './Inventory';
 import Fish from './Fish';
 import sampleFishes from '../sample-fishes';
+import base from '../base';
 
 class App extends React.Component {
 
@@ -12,6 +13,21 @@ class App extends React.Component {
     fishes: {},
     order: {}
   };
+
+  componentDidMount(){
+    const { params } = this.props.match;
+    this.ref = base.syncState(`${params.storeId}/fishes`, {
+      context: this,
+      state: 'fishes'
+    });
+  };
+
+  componentWillUnmount(){
+    // every time I go back to the store selection screen, the state ref is unmounted to prevent a memory leak
+    // this way we only work with a state ref at a time
+    base.removeBinding(this.ref);
+  };
+
   addFish = (fish) => {
     // To update the state we need to do the following:
     // 1. Take a copy of the existing state. We never want to update our state directly
