@@ -12,7 +12,8 @@ class Inventory extends React.Component {
             key={key}
             index={key}
             fish={this.props.fishes[key]}
-            updateFish={this.props.updateFish} />
+            updateFish={this.props.updateFish}
+            deleteFish={this.props.deleteFish} />
         ))}
         {/* we pass the function using props, so thats why we need to invoke them here */}
         <AddFishForm addFish={this.props.addFish} />

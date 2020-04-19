@@ -57,6 +57,13 @@ class App extends React.Component {
     this.setState({ fishes });
   };
 
+  deleteFish = key => {
+    const fishes = { ...this.state.fishes };
+    // In order to delete an object in Firebase we need to set it to null
+    fishes[key] = null;
+    this.setState({ fishes });
+  };
+
   loadSampleFishes = () => {
     // this is the json data we imported, so we are just adding it to the state
     this.setState({ fishes: sampleFishes });
@@ -69,6 +76,13 @@ class App extends React.Component {
     order[key] = order[key] + 1 || 1;
     // 3. Call setState to update our current state
     this.setState({ order: order })
+  };
+
+  removeFromOrder = key => {
+    const order = { ...this.state.order };
+    // Since the order is not being mirrored by Firebase we don't need th null here
+    delete order[key];
+    this.setState({ order });
   };
 
   render(){
@@ -88,10 +102,15 @@ class App extends React.Component {
             )}
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order} />
+        <Order
+          fishes={this.state.fishes}
+          order={this.state.order}
+          removeFromOrder={this.removeFromOrder}
+        />
         <Inventory
           addFish={this.addFish}
           updateFish={this.updateFish}
+          deleteFish={this.deleteFish}
           loadSampleFishes={this.loadSampleFishes}
           fishes={this.state.fishes}
         />
