@@ -1,7 +1,7 @@
 // its a good practice to name the components with the same class name
 // we'll always need to import react into our components
-import React from 'react';
-import { getFunName } from '../helpers';
+import React from "react";
+import { getFunName } from "../helpers";
 
 // every component is a class, components are basically elements that have the potencial to be repeated in the web page
 class StorePicker extends React.Component {
@@ -18,20 +18,20 @@ class StorePicker extends React.Component {
     this.props.history.push(`/store/${storeName}`);
   };
 
-  render(){
+  render() {
     return (
-      <form className='store-selector' onSubmit={this.goToStore}>
+      <form className="store-selector" onSubmit={this.goToStore}>
         <h2>Please enter a store</h2>
         <input
-          type='text'
+          type="text"
           ref={this.myInput}
           required
-          placeholder='Store name'
+          placeholder="Store name"
           defaultValue={getFunName()}
         />
-        <button type='submit'>Visit Store</button>
+        <button type="submit">Visit Store</button>
       </form>
-    )
+    );
   }
 }
 

@@ -1,43 +1,45 @@
-import React from 'react';
-import Header from './Header';
-import Order from './Order';
-import Inventory from './Inventory';
-import Fish from './Fish';
-import sampleFishes from '../sample-fishes';
-import base from '../base';
+import React from "react";
+import Header from "./Header";
+import Order from "./Order";
+import Inventory from "./Inventory";
+import Fish from "./Fish";
+import sampleFishes from "../sample-fishes";
+import base from "../base";
 
 class App extends React.Component {
-
   // Any function the updates the state needs to live where the state is defined
   state = {
     fishes: {},
-    order: {}
+    order: {},
   };
 
-  componentDidMount(){
+  componentDidMount() {
     const { params } = this.props.match;
     // reinstate localstorage so we don't loose our data with every refresh or component mount
     const localStorageRef = localStorage.getItem(params.storeId);
     if (localStorageRef) {
-      this.setState({order: JSON.parse(localStorageRef) });
+      this.setState({ order: JSON.parse(localStorageRef) });
     }
 
     this.ref = base.syncState(`${params.storeId}/fishes`, {
       context: this,
-      state: 'fishes'
+      state: "fishes",
     });
-  };
+  }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     // JSON.stringify converts our object into a readable string
-    localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
-  };
+    localStorage.setItem(
+      this.props.match.params.storeId,
+      JSON.stringify(this.state.order)
+    );
+  }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     // every time I go back to the store selection screen, the state ref is unmounted to prevent a memory leak
     // this way we only work with a state ref at a time
     base.removeBinding(this.ref);
-  };
+  }
 
   addFish = (fish) => {
     // To update the state we need to do the following:
@@ -47,7 +49,7 @@ class App extends React.Component {
     fishes[`fish${Date.now()}`] = fish;
     // 3. Set the new fishes object to state
     this.setState({
-      fishes: fishes
+      fishes: fishes,
     });
   };
 
@@ -57,7 +59,7 @@ class App extends React.Component {
     this.setState({ fishes });
   };
 
-  deleteFish = key => {
+  deleteFish = (key) => {
     const fishes = { ...this.state.fishes };
     // In order to delete an object in Firebase we need to set it to null
     fishes[key] = null;
@@ -75,31 +77,31 @@ class App extends React.Component {
     // 2. Add an order or update the order quantity for a key
     order[key] = order[key] + 1 || 1;
     // 3. Call setState to update our current state
-    this.setState({ order: order })
+    this.setState({ order: order });
   };
 
-  removeFromOrder = key => {
+  removeFromOrder = (key) => {
     const order = { ...this.state.order };
     // Since the order is not being mirrored by Firebase we don't need th null here
     delete order[key];
     this.setState({ order });
   };
 
-  render(){
+  render() {
     return (
-      <div className='catch-of-the-day'>
-        <div className='menu'>
-          <Header tagline='Fresh Seafood Market' />
-          <ul className='fishes'>
+      <div className="catch-of-the-day">
+        <div className="menu">
+          <Header tagline="Fresh Seafood Market" />
+          <ul className="fishes">
             {/* react needs a unique identifier when looping elements, that why we pass down key inside the tag */}
-            {Object.keys(this.state.fishes).map(key =>
+            {Object.keys(this.state.fishes).map((key) => (
               <Fish
                 key={key}
                 index={key}
                 details={this.state.fishes[key]}
                 addToOrder={this.addToOrder}
               />
-            )}
+            ))}
           </ul>
         </div>
         <Order
@@ -115,7 +117,7 @@ class App extends React.Component {
           fishes={this.state.fishes}
         />
       </div>
-    )
+    );
   }
 }
 export default App;

@@ -1,25 +1,28 @@
-import React from 'react';
-import AddFishForm from './AddFishForm';
-import EditFishForm from './EditFishForm';
+import React from "react";
+import AddFishForm from "./AddFishForm";
+import EditFishForm from "./EditFishForm";
 
 class Inventory extends React.Component {
-  render () {
+  render() {
     return (
-      <div className='inventory'>
+      <div className="inventory">
         <h2>Inventory</h2>
-        {Object.keys(this.props.fishes).map(key => (
+        {Object.keys(this.props.fishes).map((key) => (
           <EditFishForm
             key={key}
             index={key}
             fish={this.props.fishes[key]}
             updateFish={this.props.updateFish}
-            deleteFish={this.props.deleteFish} />
+            deleteFish={this.props.deleteFish}
+          />
         ))}
         {/* we pass the function using props, so thats why we need to invoke them here */}
         <AddFishForm addFish={this.props.addFish} />
-        <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
+        <button onClick={this.props.loadSampleFishes}>
+          Load Sample Fishes
+        </button>
       </div>
-    )
+    );
   }
 }
 
