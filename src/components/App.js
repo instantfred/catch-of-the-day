@@ -51,6 +51,12 @@ class App extends React.Component {
     });
   };
 
+  updateFish = (key, updatedFish) => {
+    const fishes = { ...this.state.fishes };
+    fishes[key] = updatedFish;
+    this.setState({ fishes });
+  };
+
   loadSampleFishes = () => {
     // this is the json data we imported, so we are just adding it to the state
     this.setState({ fishes: sampleFishes });
@@ -85,7 +91,9 @@ class App extends React.Component {
         <Order fishes={this.state.fishes} order={this.state.order} />
         <Inventory
           addFish={this.addFish}
+          updateFish={this.updateFish}
           loadSampleFishes={this.loadSampleFishes}
+          fishes={this.state.fishes}
         />
       </div>
     )
