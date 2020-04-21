@@ -2,7 +2,7 @@ import Rebase from "re-base";
 import firebase from "firebase";
 
 const firebaseApp = firebase.initializeApp({
-  apiKey: process.env.FIREBASE_KEY,
+  apiKey: `${process.env.REACT_APP_FIREBASE_KEY}`,
   authDomain: "catchoftheday-7c7ec.firebaseapp.com",
   databaseURL: "https://catchoftheday-7c7ec.firebaseio.com",
 });
